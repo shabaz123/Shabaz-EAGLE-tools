@@ -1,0 +1,11 @@
+EAGLE CAD tools
+
+Compile on any PC using gcc -o <program_name> <source_name.c>
+When run, it will prompt for parameters in order to generate a script file suitable for EAGLE.
+
+The source code is self-explanatory.
+
+smd_tool.c is ideal for generating dual row (e.g. SOIC) and square (e.g. QFP) packages.
+toroid_tool.c is ideal for generating packages for toroid inductors, either vertically or horizontally mounted.
+
+License: Free for all non-commercial use.
