@@ -8,4 +8,7 @@ The source code is self-explanatory.
 smd_tool.c is ideal for generating dual row (e.g. SOIC) and square (e.g. QFP) packages.
 toroid_tool.c is ideal for generating packages for toroid inductors, either vertically or horizontally mounted.
 
+hpgl2eagle.c is used for converting from many line/graphic image formats into EAGLE format. See the 
+hpgl2eagle-notes.txt file for further information on this.
+
 License: Free for all non-commercial use.

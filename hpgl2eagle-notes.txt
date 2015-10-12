@@ -1,0 +1,22 @@
+There are some Autocad DXF <-> Eagle converters available but they seem to be demo versions, and I didn’t get good results. This new approach was to use Inkscape, which is open source and can open and save files in formats including DXF and HPGL. HPGL is a simple language using PU/PD (pen up/pen down) commands like this: PU2178,677;PD2178,1065;PD2175,1267;PD2173,1316;PD2169,1343;
+
+The numbers are X and Y co-ordinates in inches, multiplied by a factor (usually 1016). I tend to work in mm, so the conversion factor for mm is 1016/25.4, i.e. 40.
+
+This means that there is a possibility for Eagle to accept many file formats, as long as it is possible to convert from HPGL to Eagle script format. Any other format such as DXF can be achieved by using Inkscape first. I tested this using a solidworks drawing saved in DXF format, loaded into Inkscape, saved as HPGL, converted to Eagle script format. There is a HPGL <-> Eagle converter executable at the cadsoft downloads page, but it dates to 2003, and it did not work for my version of Windows. Anyway, it was quick to write a simple HPGL<->Eagle converter, the single c++ file is hpgl2eagle1.c. It is compiled using the command line “g++ hpgl2eagle1.c”. It accepts two parameters (the source HPGL file and the destination script file).
+
+The conversion factor (40) is hard-coded, but it is easily edited.
+
+The Eagle script file for the above HPGL snippet looks like this (conversion factor was not 40, it was set to 451.55):
+
+# File generated using hpgl2eagle
+grid mm
+grid 1
+set wire_bend 2
+change width 0.1
+wire (4.823 1.499) (4.823 2.359)
+wire (4.823 2.359) (4.817 2.806)
+wire (4.817 2.806) (4.812 2.914)
+wire (4.812 2.914) (4.803 2.974)
+
+It also opens up possibilities to convert bitmaps into a suitable form. A .png format file can be loaded into Inkscape, and ‘trace bitmap’ can be executed to do line detection. This can then be converted to HPGL format.Using this process, it was possible to convert a true-type font saved in .png format into HPGL line art, and finally into Eagle format. 
+
