@@ -1,6 +1,7 @@
 EAGLE CAD tools
 
 Compile on any PC using gcc -o <program_name> <source_name.c>
+Building hpgl2eagle may require using g++ instead of gcc, especially on windows.
 When run, it will prompt for parameters in order to generate a script file suitable for EAGLE.
 
 The source code is self-explanatory.
