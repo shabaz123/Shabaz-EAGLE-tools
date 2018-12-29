@@ -1,8 +1,11 @@
 // BGA-style drawing tool for EAGLE
 // Revision log:
-// Version 1.0    shabaz
-// Version 1.1    30 June 2012
-// version 1.2    uploaded to github September 2015
+// Version 1.0    shabaz 29 dec 2018
+// Not very tidy but seems to work
+// my EAGLE version has a bug, it cannot accept Layer tStop command.
+// so this BGA tool draws on layer bottom, and it is up to the user to
+// deselect all other layers, then select all on layer bottom, and then change to tStop.
+
 //
 #include <stdio.h>
 
