@@ -1,24 +1,24 @@
-/********************************************************************
- *  HPGL to EAGLE SCR converter
- *
- *  Ver   Author                Description
- *  ----  ----------------      ---------------------------------
- *  1.0   Shabaz     				    Initial version
- *  1.1   Shabaz                October 2015 - Uploaded to GitHub
- *
- ********************************************************************/
-
-
+/********************************************************************************
+*  HPGL to EAGLE SCR converter
+*
+*  Ver   Author                Description
+*  ----  ----------------      ---------------------------------
+*  1.0   Shabaz                Initial version
+*  1.1   Shabaz                October 2015 - Uploaded to GitHub
+*  1.2   greigs                Added scale parameter. Build fix for g++ on windows
+*********************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string>
 #include <string.h>
 
 using std::string;
-	
+
 // HPGL scaling of 1016 points to an inch means that the
-// milimetre scale is 1016/25.4 = 40 points per millimetre
-#define SCALE 40
+// millimetre scale is 1016/25.4 = 40 points per millimetre
+#define DEFAULTSCALE 40
+
 
 // global vars
 int pval;
@@ -43,13 +43,11 @@ main(int argc, char *argv[])
   int idx;
   int state;
   int ret;
-  int com;
-  int sem;
   unsigned int fromint[2];
   unsigned int toint[2];
   unsigned int oldint[2];
   int processed;
-  double scale;
+  double scale=DEFAULTSCALE;
   double fromf[2];
   double tof[2];
   
@@ -60,6 +58,8 @@ main(int argc, char *argv[])
   else
   {
   	printf("Error - no input file specified\n");
+  	printf("Usage: hpgl2eagle.exe inputfile outputfile.scr scale\n");
+  	printf("       where scale is points per millimetre (e.g. 20.1) - Default is 40.0");
   	return(1);
   }
   
@@ -71,7 +71,11 @@ main(int argc, char *argv[])
   {
   	out_name=string("output.scr");
   }
-  
+  if (argc>3)
+  {
+  	scale=atof(argv[3]);
+  }
+
   infile=fopen(in_name.c_str(), "rb");
   if (infile==NULL)
   {
@@ -86,6 +90,8 @@ main(int argc, char *argv[])
   	return(1);
   }
   
+  printf("Scale set to %f points per millimetre\n", scale);
+
   // initial file content:
   fprintf(outfile, "# File generated using hpgl2eagle\n");
   fprintf(outfile, "grid mm\n");
@@ -97,8 +103,8 @@ main(int argc, char *argv[])
   pval=0;
   idx=0;
   state=0;
-  scale=SCALE;
-  
+
+
   do
   {
   	do
